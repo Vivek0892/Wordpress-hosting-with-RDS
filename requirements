@@ -1,0 +1,8 @@
+i. Launch a AWS instances (OS can choose by your choice)
+ii. Host WordPress files under a user directory
+iii. Create an RDS instance
+iv. Connect RDS Database with your WordPress and run webpage using URL myawshosting.net
+
+NB: Only Minimum access is granted
+
+

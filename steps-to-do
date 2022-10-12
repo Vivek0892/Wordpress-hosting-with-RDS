@@ -1,0 +1,63 @@
+Launch a AWS instances (OS can choose by your choice)
+ii. Host WordPress files under a user directory
+iii. Create an RDS instance
+iv. Connect RDS Database with your WordPress and run webpage using URL myawshosting.net
+
+
+
+OS : Ubuntu
+Platform : AWS
+
+    • Pakage Needed to Install: sudo apt install apache2 -y;sudo apt install mariadb-client -y;sudo apt install php php-mysql -y;sudo apt install vim -y;sudo apt-get install php-xml -y;sudo apt-get install php-mbstring -y;sudo apt-get install php-curl -y;sudo apt-get install php-gd -y;sudo systemctl restart apache2
+
+    • Create an User & passwd: Useradd wphost , passwd wphost
+    • switch to user : su - wphost
+    • Make a custom folder: mkdir /var/www/public_html
+    • set permission and ownership: chown -R $USER:$USER /var/www/public_html  , chmod -R 755 /var/www/public_html
+    • create Vhost file in etc/apache2/sites-available/filename.conf
+    • content:  <VirtualHost *:80>
+	ServerAdmin webmaster@localhost
+	ServerName myawshosting.net
+	DocumentRoot /var/www/public_html
+	<Directory /var/www/public_html>
+     	   AllowOverride None
+     	   Options -Indexes
+      	  Require all granted
+	</Directory>
+	</VirtualHost>
+    • Get and install Wordpress - cd /tmp && wget https://wordpress.org/latest.tar.gz
+    • Extract – tar -xvf latest,tar,gz
+    • Copy to document Root- cp -R wordpress/* /var/www/public_html
+    • Create ‘uploads’ directory. - mkdir /var/www/html/wordpress/wp-content/uploads
+    • Finally, change permissions of ‘uploads’ directory.- chown -R www-data:www-data /var/www/html/wordpress/wp-content/uploads/
+    • Open your browser and go to the server’s URL. - http://ip-address
+    • You’ll be presented with a WordPress wizard and a list of credentials required to successfully set it up.Fill out the form as shown with the credentials specified when creating the WordPress database in the MariaDB database created in RDS If all the details are correct, you will be given the green light to proceed. Run the installation.Fill out the additional details required such as site title, Username, and Password and save them somewhere safe lest you forget. Ensure to use a strong password.Scroll down and Hit ‘Install WordPress’. If all went well, then you will get a ‘Success’ notification.Click on the ‘Login’ button to get to access the Login page of your fresh WordPress installation.Provide your login credentials and hit ‘Login’.there goes the WordPress dashboard that you can use to create your first blog or website! Congratulations for having come this far. You can now proceed to discover the various features, plugins, and themes and proceed setting up your first blog/website!
+
+Sign in to the AWS Management Console and open the Amazon RDS console
+    1. In the navigation pane, choose Create Databases.
+    2. On the Create database page, shown following, make sure that the Standard create option is chosen, and then choose MySQL.
+    3. In the Templates section, choose Free tier.
+    4. In the Availability and durability section, keep the defaults.
+    5. In the Settings section, set these values:
+        ◦ DB instance identifier – Type tutorial-db-instance.
+        ◦ Master username – Type tutorial_user.
+        ◦ Auto generate a password – Leave the option turned off.
+        ◦ Master password – Type a password.
+        ◦ Confirm password – Retype the password.
+    6. In the Instance configuration section, set these values:
+        ◦ Burstable classes (includes t classes)
+        ◦ db.t3.micro
+    7. In the Storage section, keep the defaults.
+    1. In the Connectivity section, set these values and keep the other values as their defaults:
+            ▪ For Compute resource, choose  Don’t Connect to an EC2 compute resource.
+              
+    8. In the Database authentication section, make sure Password authentication is selected.
+    1. Open the Additional configuration section, and enter sample for Initial database name. Keep the default settings for the other options.
+
+    2. To create your MySQL DB instance, choose Create database.
+       Your new DB instance appears in the Databases list with the status Creating. 
+
+    3. Wait for the Status of your new DB instance to show as Available. Then choose the DB instance name to show its details.
+
+    4. In the Connectivity & security section, view the Endpoint and Port of the DB instance.
+
